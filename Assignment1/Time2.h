@@ -50,12 +50,10 @@ public:
 	}
 
 
-	int getTime() const
+	int getTotalSeconds() const
 	{
 		return (hours * 3600 + minutes * 60 + seconds);
 	}
 
-	Time2 operator - (const Time2 &); // Overloaded -
-	void simplify();
 };
 #endif 

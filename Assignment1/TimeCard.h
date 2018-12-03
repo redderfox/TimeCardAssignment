@@ -56,7 +56,8 @@ public:
 
 	double getHours() const
 	{
-
+		double seconds = punchOutTime.getTotalSeconds() - punchInTime.getTotalSeconds();
+		return (seconds / 3600);
 	}
 };
 #endif 
