@@ -56,7 +56,7 @@ public:
 
 	double getHours() const
 	{
-		
+
 	}
 };
 #endif 
