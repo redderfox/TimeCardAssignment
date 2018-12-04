@@ -8,9 +8,8 @@ istream &operator >> (istream &strm, TimeCard &obj)
 
 	cout << "Worker ID: ";
 	strm >> obj.workerID;
-	obj.punchOutTime.set(input);
 	cout << "Pay Rate: ";
 	strm >> obj.payRate;
 
 	return strm;
-}
+} 

@@ -2,6 +2,7 @@
 #define TIME2_H
 
 #include <cstdlib>
+#include <iostream>
 #include <string>
 using namespace std;
 
@@ -26,27 +27,23 @@ public:
 
 	void set(string time)
 	{
-		size_t pos = 0;
-		string token;
-		int iteration = 1;
+		string temp;
 
-		while (pos = time.find(":") != string::npos)
+		for (size_t i = 0; i < time.length(); i += 3)
 		{
-			token = time.substr(0, pos);
-			if (iteration == 1)
-				hours = atoi(token.c_str());
+			temp = time.substr(i, 2);
+			if (i == 0)
+				hours = stoi(temp);
+			else if (i == 3)
+				minutes = stoi(temp);
+			else if (i == 6)
+				seconds = stoi(temp);
 			else
-				minutes = atoi(token.c_str());
-			time.erase(0, pos + 1);
-			iteration++;
+			{
+				if (temp == "PM" || temp == "pm")
+					hours += 12;
+			}
 		}
-		pos = time.find(" ");
-		token = time.substr(0, pos);
-		seconds = atoi(token.c_str());
-		time.erase(0, pos + 1);
-
-		if (time == "PM")
-			hours += 12;
 	}
 
 

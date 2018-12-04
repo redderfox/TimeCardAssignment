@@ -10,6 +10,7 @@ int main()
 {
 	char choice;
 	string input;
+
 	vector<TimeCard> timeCards;
 
 	do
@@ -22,6 +23,7 @@ int main()
 		{
 			cout << "Enter your choice: ";
 			cin >> choice;
+			cout << "\nChoice: " << choice;
 		} while (choice < '1' || choice > '3');
 
 		if (choice == '1')
@@ -35,10 +37,11 @@ int main()
 			cout << "Enter ID: ";
 			cin >> input;
 			int index = found(timeCards, input);
-			if (index)
+			if (index != -1)
 			{
 				cout << "Enter the time: ";
-				cin >> input;
+				cin.ignore();
+				getline(cin, input);
 				if (timeCards[index].punch(input))
 				{
 					cout << "Hours:\n";
