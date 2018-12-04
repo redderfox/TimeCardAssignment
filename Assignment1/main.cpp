@@ -4,12 +4,14 @@
 using namespace std;
 
 
-int found(vector<TimeCard> &, string);
+int findTimeCard(vector<TimeCard> &);
 
 int main()
 {
 	char choice;
 	string input;
+	int index;
+	TimeCard timeCard;
 
 	vector<TimeCard> timeCards;
 
@@ -17,50 +19,65 @@ int main()
 	{
 		cout << "MENU\n\n";
 		cout << "1) New Time Card\n";
-		cout << "2) Punch time card\n";
-		cout << "3) Quit\n";
+		cout << "2) Punch In/Out\n";
+		cout << "3) Display individual time card\n";
+		cout << "4) Display all time cards\n";
+		cout << "5) Quit\n";
 		do
 		{
 			cout << "Enter your choice: ";
 			cin >> choice;
-			cout << "\nChoice: " << choice;
-		} while (choice < '1' || choice > '3');
+		} while (choice < '1' || choice > '5');
 
-		if (choice == '1')
+		switch (choice)
 		{
-			TimeCard tc;
-			cin >> tc;
-			timeCards.push_back(tc);
-		}
-		else if (choice == '2')
-		{
-			cout << "Enter ID: ";
-			cin >> input;
-			int index = found(timeCards, input);
+		case '1':
+			cin >> timeCard;
+			timeCards.push_back(timeCard);
+			break;
+		case '2':
+			index = findTimeCard(timeCards);
 			if (index != -1)
 			{
-				cout << "Enter the time: ";
-				cin.ignore();
-				getline(cin, input);
-				if (timeCards[index].punch(input))
+				if (!timeCards[index].getHasPunched())
 				{
-					cout << "Hours:\n";
-					cout << timeCards[index].getHours();
+					cout << "Enter the time: ";
+					cin.ignore();
+					getline(cin, input);
+					timeCards[index].punch(input);
 				}
+				else
+					cout << "You have already punched out!\n";
 			}
 			else
 			{
 				cout << "Employee not found/n";
 			}
+			break;
+		case '3':
+			index = findTimeCard(timeCards);
+			if (index != -1)
+			{
+				cout << timeCards[index];
+			}
+			break;
+		case '4':
+			// displayAllTimeCards();
+			break;
 		}
-	} while (choice != '3');
+	} while (choice != '5');
 	cin.get();
 	cin.get();
 	return 0;
 }
 
-int found(vector<TimeCard> &tc, string id)
+int findTimeCard(vector<TimeCard> &tc)
 {
+	string id;
+
+	cout << "Enter ID: ";
+	cin >> id;
+
 	for (int i = 0; i < tc.size(); i++)
 	{
 		if (tc[i].getWorkerID() == id)

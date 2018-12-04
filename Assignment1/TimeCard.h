@@ -50,27 +50,34 @@ public:
 		return payRate;
 	}
 
+	bool getHasPunched() const
+	{
+		return hasPunched;
+	}
+
 	double getHours() const
 	{
 		double seconds = punchOutTime.getTotalSeconds() - punchInTime.getTotalSeconds();
 		return (seconds / 3600);
 	}
 
-	bool punch(string time)
+	double getEarnings() const
+	{
+		return payRate * this->getHours();
+	}
+
+	void punch(string time)
 	{
 		if (punchInTime.getTotalSeconds() == 0)
-		{
 			punchInTime.set(time);
-		}
-		else
+		else if (punchOutTime.getTotalSeconds() == 0)
 		{
 			punchOutTime.set(time);
 			hasPunched = true;
 		}
-		return hasPunched;
 	}
 
-	// friend ostream &operator << (ostream &, const TimeCard &);
+	friend ostream &operator << (ostream &, const TimeCard &);
 	friend istream &operator >> (istream &, TimeCard &);
 };
 #endif 
