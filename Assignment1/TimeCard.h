@@ -14,23 +14,57 @@ private:
 	double payRate;
 	bool hasPunched;
 public:
-	// ============
-	// CONSTRUCTORS
-	// ============
+	// ===================
+	// DEFAULT CONSTRUCTOR
+	// ===================
 	TimeCard()
 	{
-		workerID = "";
+		workerID = "EMPTY";
 		payRate = 0.0;
 		hasPunched = false;
 	}
 
+	// ==============
+	// CONSTRUCTOR #2
+	// ==============
 	TimeCard(string id, const Time2 &in, const Time2 &out, double pr)
 	{
 		workerID = id;
-		punchInTime = in;
-		punchOutTime = out;
 		payRate = pr;
-		hasPunched = true;
+		// If punched out before punched in, set empty Times
+		if (out.getTotalSeconds() < in.getTotalSeconds())
+		{
+			punchInTime.setEmpty();
+			punchOutTime.setEmpty();
+			hasPunched = false;
+		}
+		else
+		{
+			punchInTime = in;
+			punchOutTime = out;
+			hasPunched = true;
+		}
+	}
+
+	// ==============
+	// CONSTRUCTOR #3
+	// ==============
+	TimeCard(string id, const Time2 &in, double pr)
+	{
+		workerID = id;
+		punchInTime = in;
+		payRate = pr;
+		hasPunched = false;
+	}
+
+	// ==============
+	// CONSTRUCTOR #4
+	// ==============
+	TimeCard(string id, double pr)
+	{
+		workerID = id;
+		payRate = pr;
+		hasPunched = false;
 	}
 
 	// ================
@@ -66,6 +100,7 @@ public:
 
 	double getHours() const
 	{
+		// Convert from seconds to hours
 		double seconds = punchOutTime.getTotalSeconds() - punchInTime.getTotalSeconds();
 		return (seconds / 3600);
 	}
@@ -75,7 +110,9 @@ public:
 		return payRate * this->getHours();
 	}
 
+	// =====================
 	// FUNCTION DECLARATIONS
+	// =====================
 	bool punch(string);
 	friend ostream &operator << (ostream &, const TimeCard &);
 	friend istream &operator >> (istream &, TimeCard &);

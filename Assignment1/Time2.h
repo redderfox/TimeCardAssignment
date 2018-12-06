@@ -13,24 +13,50 @@ private:
 	int minutes;
 	int seconds;
 public:
-	// ============
-	// CONSTRUCTORS
-	// ============
+	// ===================
+	// DEFAULT CONSTRUCTOR
+	// ===================
 	Time2()
+	{
+		setEmpty();
+	}
+
+	// ==============
+	// CONSTRUCTOR #2
+	// ==============
+	Time2(int h, int m, int s)  // Sets time as '0' if parameters are invalid
+	{
+		int times[3] = { h, m, s };
+
+		if (validTime(times))
+		{
+			hours = h;
+			minutes = m;
+			seconds = s;
+		}
+		else
+			setEmpty();
+	}
+
+	// ==============
+	// CONSTRUCTOR #3
+	// ==============
+	Time2(string time)  // Sets time as '0' if parameters are invalid
+	{
+		if (!set(time))
+			setEmpty();
+	}
+
+	// ================
+	// MUTATORS
+	// ================
+	void setEmpty()
 	{
 		hours = 0;
 		minutes = 0;
 		seconds = 0;
 	}
 
-	Time2(string time)
-	{
-		set(time);
-	}
-
-	// ================
-	// MUTATOR
-	// ================
 	bool set(string);
 
 	// ==================
@@ -45,8 +71,10 @@ public:
 
 	string getTime() const;
 
+	// =====================
 	// FUNCTION DECLARATIONS
-	bool validTime(int[]);
+	// =====================
+	bool validTime(int *);
 	friend ostream &operator << (ostream &, const Time2 &);
 };
 #endif 

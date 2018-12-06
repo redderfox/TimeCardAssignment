@@ -47,6 +47,9 @@ string Time2::getTime() const
 {
 	string h, m, s, ampm;  // Time components
 
+	if (this->getTotalSeconds() == 0)
+		return "NOT SET";
+
 	// If time is PM, subtract 12 from hours and set PM
 	if (hours > 12)
 	{
@@ -76,16 +79,16 @@ string Time2::getTime() const
 
 
 // Checks if hours, minutes, seconds are valid values
-bool Time2::validTime(int time[])
+bool Time2::validTime(int *times)
 {
-	bool isValid = false;
+	bool isValidt = false;
 
-	if (time[0] > 0 && time[0] < 13)  // Hours is between 1-12?
-		if (time[1] >= 0 && time[1] < 60)  // Minutes is between 0-59?
-			if (time[2] >= 0 && time[2] < 60)  // Seconds is between 0-59?
-				isValid = true;
+	if (times[0] > 0 && times[0] < 13)  // Hours is between 1-12?
+		if (times[1] >= 0 && times[1] < 60)  // Minutes is between 0-59?
+			if (times[2] >= 0 && times[2] < 60)  // Seconds is between 0-59?
+				isValidt = true;
 
-	return isValid;
+	return isValidt;
 }
 
 
