@@ -1,10 +1,10 @@
 #ifndef TIME2_H
 #define TIME2_H
 
-#include <cstdlib>
 #include <iostream>
 #include <string>
 using namespace std;
+
 
 class Time2 
 {
@@ -13,6 +13,9 @@ private:
 	int minutes;
 	int seconds;
 public:
+	// ============
+	// CONSTRUCTORS
+	// ============
 	Time2()
 	{
 		hours = 0;
@@ -25,32 +28,25 @@ public:
 		set(time);
 	}
 
-	void set(string time)
-	{
-		string temp;
+	// ================
+	// MUTATOR
+	// ================
+	bool set(string);
 
-		for (size_t i = 0; i < time.length(); i += 3)
-		{
-			temp = time.substr(i, 2);
-			if (i == 0)
-				hours = stoi(temp);
-			else if (i == 3)
-				minutes = stoi(temp);
-			else if (i == 6)
-				seconds = stoi(temp);
-			else
-			{
-				if (temp == "PM" || temp == "pm")
-					hours += 12;
-			}
-		}
-	}
+	// ==================
+	// ACCESSORS
+	// ==================
 
-
+	// Returns time in total seconds. Easier to calculate hours worked
 	int getTotalSeconds() const
 	{
 		return (hours * 3600 + minutes * 60 + seconds);
 	}
 
+	string getTime() const;
+
+	// FUNCTION DECLARATIONS
+	bool validTime(int[]);
+	friend ostream &operator << (ostream &, const Time2 &);
 };
 #endif 

@@ -2,9 +2,9 @@
 #define TIMECARD_H
 
 #include <string>
-#include <iostream>
 #include "Time2.h"
 using namespace std;
+
 
 class TimeCard
 {
@@ -14,6 +14,9 @@ private:
 	double payRate;
 	bool hasPunched;
 public:
+	// ============
+	// CONSTRUCTORS
+	// ============
 	TimeCard()
 	{
 		workerID = "";
@@ -27,9 +30,12 @@ public:
 		punchInTime = in;
 		punchOutTime = out;
 		payRate = pr;
-		hasPunched = false;
+		hasPunched = true;
 	}
 
+	// ================
+	// MUTATORS
+	// ================
 	void setWorkerID(string id)
 	{
 		workerID = id;
@@ -40,6 +46,9 @@ public:
 		payRate = pr;
 	}
 
+	// ==================
+	// ACCESSORS
+	// ==================
 	string getWorkerID() const
 	{
 		return workerID;
@@ -66,17 +75,8 @@ public:
 		return payRate * this->getHours();
 	}
 
-	void punch(string time)
-	{
-		if (punchInTime.getTotalSeconds() == 0)
-			punchInTime.set(time);
-		else if (punchOutTime.getTotalSeconds() == 0)
-		{
-			punchOutTime.set(time);
-			hasPunched = true;
-		}
-	}
-
+	// FUNCTION DECLARATIONS
+	bool punch(string);
 	friend ostream &operator << (ostream &, const TimeCard &);
 	friend istream &operator >> (istream &, TimeCard &);
 };
